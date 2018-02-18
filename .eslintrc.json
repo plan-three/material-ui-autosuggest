@@ -1,0 +1,90 @@
+{
+    "env": {
+        "es6": true,
+        "node": true,
+        "browser": true
+    },
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "extends": "eslint:recommended",
+    "parser": "babel-eslint",
+    "rules": {
+        "indent": [
+            "error",
+            "tab",
+            { "SwitchCase": 1 }
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "never"
+        ],
+        "no-const-assign": "error",
+        "no-this-before-super": "warn",
+        "no-undef": "error",
+        "no-unreachable": "warn",
+        "no-unused-vars": "error",
+        "constructor-super": "error",
+        "valid-typeof": "warn",
+        "space-before-function-paren": [
+            "error",
+            {
+                "anonymous": "never",
+                "named": "never",
+                "asyncArrow": "always"
+            }
+        ],
+        "keyword-spacing": [
+            "error",
+            {
+                "before": true,
+                "after": true
+            }
+        ],
+        "comma-style": [
+            "error",
+            "last"
+        ],
+        "arrow-spacing": "error",
+        "no-multi-spaces": "error",
+        "no-trailing-spaces": "error",
+        "no-multiple-empty-lines": [
+            "error",
+            {
+                "max": 1,
+                "maxEOF": 0,
+                "maxBOF": 0
+            }
+        ],
+        "padded-blocks": [
+            "error",
+            "never"
+        ],
+        "eol-last": [
+            "warn",
+            "always"
+        ],
+        "comma-dangle": [
+            "error",
+            "never"
+        ],
+        "react/jsx-uses-react": "error",
+        "react/jsx-uses-vars": "error",
+        "jest/no-disabled-tests": "warn",
+        "jest/no-focused-tests": "error"
+    },
+    "plugins": [
+        "react",
+        "jest"
+    ]
+}
