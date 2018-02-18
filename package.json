@@ -4,8 +4,11 @@
 	"description": "A fuzzy search autosuggest component for Material-UI",
 	"main": "dist/index.js",
 	"scripts": {
-		"build": "webpack && npm run docgen",
-		"dev": "webpack-dev-server",
+		"build": "webpack",
+		"build:example": "webpack --config webpack-dev-server.config.js",
+		"build:docs": "node scripts/docs.js",
+		"build:all": "npm run build && npm run build:example && npm run build:docs",
+		"dev": "webpack-dev-server --config webpack-dev-server.config.js",
 		"test": "jest",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
@@ -45,7 +48,6 @@
 		"react-docgen": "^2.20.1",
 		"react-docgen-markdown-renderer": "^1.0.1",
 		"react-syntax-highlighter": "^7.0.0",
-		"webpack": "^3.11.0",
 		"webpack-dev-server": "^2.11.1"
 	},
 	"dependencies": {
@@ -54,7 +56,8 @@
 		"prop-types": "^15.6.0",
 		"react": "^16.2.0",
 		"react-autosuggest": "^9.3.3",
-		"react-dom": "^16.2.0"
+		"react-dom": "^16.2.0",
+		"webpack": "^3.11.0"
 	},
 	"lint-staged": {
 		"*.js": [
