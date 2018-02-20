@@ -37,12 +37,33 @@ class App extends React.Component {
 				error,
 				highlight,
 				selectClosestMatch,
-				suggestionLimit
+				suggestionLimit,
+				panels: {
+					componentCode: {
+						enabled: false,
+						displayName: 'Component Code'
+					},
+					suggestions: {
+						enabled: false,
+						displayName: 'Most Recent Suggestions'
+					}
+				}
 			}
 		}
 		this.handleChange = this.handleChange.bind(this)
 		this.handleOptionChange = this.handleOptionChange.bind(this)
 		this.handleOptionSwitchChange = this.handleOptionSwitchChange.bind(this)
+	}
+
+	togglePanelEnabled(key, enabled) {
+		const { panels } = this.state.options
+		panels[key].enabled = enabled
+		this.setState({
+			options: {
+				...this.state.options,
+				panels
+			}
+		})
 	}
 
 	handleChange(value) {
@@ -76,9 +97,15 @@ class App extends React.Component {
 	render() {
 		const { classes } = this.props
 		const { options } = this.state
+		const { panels } = options
+
 		return (
 			<div>
-				<AppBar title="Material-UI Autosuggest" />
+				<AppBar
+					title="Material-UI Autosuggest"
+					panels={panels}
+					togglePanelEnabled={this.togglePanelEnabled.bind(this)}
+				/>
 				<div className={classes.content}>
 					<Autosuggest
 						suggestions={suggestions}
@@ -100,8 +127,14 @@ class App extends React.Component {
 						onOptionChange={this.handleOptionChange}
 						onOptionSwitchChange={this.handleOptionSwitchChange}
 					/>
-					<ComponentCodePanel options={this.state.options} />
-					<SuggestionsPanel suggestions={this.state.suggestions} />
+					{
+						this.state.options.panels.componentCode.enabled &&
+						<ComponentCodePanel options={this.state.options} />
+					}
+					{
+						this.state.options.panels.suggestions.enabled &&
+						<SuggestionsPanel suggestions={this.state.suggestions} />
+					}
 				</div>
 			</div>
 		)

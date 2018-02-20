@@ -6,6 +6,7 @@ import {
 	Toolbar,
 	Typography
 } from 'material-ui'
+import AppMenu from './app-menu'
 
 const styles = {
 	root: {
@@ -16,7 +17,7 @@ const styles = {
 	}
 }
 
-const AppBar = ({ title, classes }) => {
+const AppBar = ({ title, classes, panels, togglePanelEnabled }) => {
 	return (
 		<div className={classes.root}>
 			<MuiAppBar position="static">
@@ -24,6 +25,7 @@ const AppBar = ({ title, classes }) => {
 					<Typography variant="title" color="inherit" className={classes.flex}>
 						{ title }
 					</Typography>
+					<AppMenu panels={panels} togglePanelEnabled={togglePanelEnabled} />
 				</Toolbar>
 			</MuiAppBar>
 		</div>
@@ -32,7 +34,9 @@ const AppBar = ({ title, classes }) => {
 
 AppBar.propTypes = {
 	classes: PropTypes.object.isRequired,
-	title: PropTypes.string.isRequired
+	title: PropTypes.string.isRequired,
+	panels: PropTypes.object.isRequired,
+	togglePanelEnabled: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(AppBar)

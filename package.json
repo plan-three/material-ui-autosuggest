@@ -5,7 +5,7 @@
 	"main": "dist/index.js",
 	"scripts": {
 		"build": "webpack",
-		"build:example": "webpack --config webpack-dev-server.config.js",
+		"build:example": "NODE_ENV=production webpack --config webpack-dev-server.config.js",
 		"build:docs": "node scripts/docs.js",
 		"build:all": "npm run build && npm run build:example && npm run build:docs",
 		"dev": "webpack-dev-server --config webpack-dev-server.config.js",
