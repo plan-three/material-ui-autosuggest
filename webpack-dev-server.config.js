@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
@@ -35,7 +36,11 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			title: 'Material-UI Autosuggest Example',
 			template: path.join(__dirname, 'example', 'index.html')
-		})
+		}),
+		new webpack.DefinePlugin({
+			'process.env.NODE_ENV': JSON.stringify('production')
+		}),
+		new webpack.optimize.UglifyJsPlugin()
 	],
 	devtool: 'source-map',
 	devServer: {
