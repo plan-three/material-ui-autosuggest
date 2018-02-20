@@ -28,6 +28,7 @@
 	"devDependencies": {
 		"babel-eslint": "^8.2.1",
 		"babel-jest": "^22.2.2",
+		"copy-to-clipboard": "^3.0.8",
 		"enzyme": "^3.3.0",
 		"enzyme-adapter-react-16": "^1.1.1",
 		"eslint": "^4.17.0",
