@@ -58,19 +58,53 @@ describe('Autosuggest', () => {
 		})
 	})
 
-	// describe('renderSuggestion()', () => {
-	// 	it('Should render suggestions', () => {
-	// 		const props = {
-	// 			...testProps,
-	// 			onChange: jest.fn()
-	// 		}
-	// 		const wrapper = mount(<Autosuggest {...props} />)
-	// 		const spy = jest.spyOn(wrapper.find('Autosuggest').at(0).instance(), 'renderSuggestion')
-	// 		wrapper.find('Input').simulate('focus')
-	// 		wrapper.find('Input').simulate('keyDown', {key: 'b', keyCode: 66})
-	// 		wrapper.find('Input').simulate('keyDown', {key: '1', keyCode: 65})
-	// 		wrapper.find('Input').simulate('change', {target: {value: 'bar'}})
-	// 		expect(spy).toHaveBeenCalled()
-	// 	})
-	// })
+	describe('renderInput()', () => {
+		it('Should accept `props.renderInput`', () => {
+			const props = {
+				...testProps,
+				onChange: jest.fn(),
+				renderInput: jest.fn()
+			}
+			const wrapper = mount(<Autosuggest {...props} />)
+			expect(wrapper.find('Autosuggest').at(0).instance().renderInput).toEqual(props.renderInput)
+			expect(props.renderInput).toHaveBeenCalled()
+		})
+	})
+
+	describe('renderSuggestion()', () => {
+		it('Should accept `props.renderSuggestion`', () => {
+			const props = {
+				...testProps,
+				onChange: jest.fn(),
+				renderSuggestion: jest.fn()
+			}
+			const wrapper = mount(<Autosuggest {...props} />)
+			expect(wrapper.find('Autosuggest').at(0).instance().renderSuggestion).toEqual(props.renderSuggestion)
+		})
+	})
+
+	describe('renderSuggestionsContainer()', () => {
+		it('Should accept `props.renderSuggestionsContainer`', () => {
+			const props = {
+				...testProps,
+				onChange: jest.fn(),
+				renderSuggestionsContainer: jest.fn()
+			}
+			const wrapper = mount(<Autosuggest {...props} />)
+			expect(wrapper.find('Autosuggest').at(0).instance().renderSuggestionsContainer).toEqual(props.renderSuggestionsContainer)
+		})
+	})
+
+	describe('onSuggestionsChange()', () => {
+		it('Should call `props.onSuggestionsChange()` when suggestions change', () => {
+			const props = {
+				...testProps,
+				onChange: jest.fn(),
+				onSuggestionsChange: jest.fn()
+			}
+			const wrapper = mount(<Autosuggest {...props} />)
+			wrapper.find('Autosuggest').at(0).instance().handleSuggestionsClearRequested()
+			expect(props.onSuggestionsChange).toHaveBeenCalledWith([])
+		})
+	})
 })
