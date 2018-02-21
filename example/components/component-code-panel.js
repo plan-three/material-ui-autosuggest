@@ -5,20 +5,34 @@ import ExpansionPanel, {
 	ExpansionPanelSummary,
 	ExpansionPanelDetails
 } from 'material-ui/ExpansionPanel'
-import { Typography } from 'material-ui'
+import { IconButton, Snackbar, Tooltip, Typography } from 'material-ui'
+import CloseIcon from 'material-ui-icons/Close'
+import CopyIcon from 'material-ui-icons/ContentCopy'
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { docco } from 'react-syntax-highlighter/styles/hljs'
+import copy from 'copy-to-clipboard'
 
-const styles = {
+const styles = theme => ({
 	root: {
 		marginTop: '1em',
 		flexGrow: 1
 	},
 	code: {
 		width: '100%'
+	},
+	close: {
+		width: theme.spacing.unit * 4,
+		height: theme.spacing.unit * 4
+	},
+	contentContainer: {
+		justifyContent: 'space-between',
+		width: '100%'
+	},
+	copyButton: {
+		float: 'right'
 	}
-}
+})
 
 function generateCodeContent(options) {
 	return (
@@ -51,28 +65,90 @@ export default TimezoneAutosuggest
 `) // eslint-disable-line
 }
 
-const ComponentCodePanel = ({ classes, options }) => {
-	const content = generateCodeContent(options)
+class ComponentCodePanel extends React.Component {
+	constructor(props) {
+		super(props)
 
-	return (
-		<div className={classes.root}>
-			<ExpansionPanel defaultExpanded>
-				<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-					<Typography variant="headline">Component Code</Typography>
-				</ExpansionPanelSummary>
-				<ExpansionPanelDetails>
-					<SyntaxHighlighter
-						language="javascript"
-						style={docco}
-						className={classes.code}
-						showLineNumbers
-					>
-						{content.replace(/\t/g, '    ')}
-					</SyntaxHighlighter>
-				</ExpansionPanelDetails>
-			</ExpansionPanel>
-		</div>
-	)
+		this.state = {
+			open: false
+		}
+		this.copyCode = this.copyCode.bind(this)
+		this.handleSnackbarOpen = this.handleSnackbarOpen.bind(this)
+		this.handleSnackbarClose = this.handleSnackbarClose.bind(this)
+	}
+
+	get content() {
+		return generateCodeContent(this.props.options)
+	}
+
+	get viewContent() {
+		return this.content.replace(/\t/g, '    ')
+	}
+
+	handleSnackbarOpen() {
+		this.setState({ open: true })
+	}
+
+	handleSnackbarClose(e, reason) {
+		if (reason === 'clickaway') return
+		this.setState({ open: false })
+	}
+
+	copyCode() {
+		copy(this.content)
+		this.handleSnackbarOpen()
+	}
+
+	render() {
+		const { classes } = this.props
+
+		return (
+			<div className={classes.root}>
+				<Snackbar
+					open={this.state.open}
+					autoHideDuration={3000}
+					onClose={this.handleSnackbarClose}
+					SnackbarContentProps={{
+						'aria-describedby': 'message-id'
+					}}
+					message={<Typography color="inherit">Code Copied</Typography>}
+					action={
+						<IconButton
+							key="close"
+							aria-label="Close"
+							color="secondary"
+							onClick={this.handleSnackbarClose}
+							className={classes.close}
+						>
+							<CloseIcon />
+						</IconButton>
+					}
+				/>
+				<ExpansionPanel defaultExpanded>
+					<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+						<Typography variant="headline">Component Code</Typography>
+					</ExpansionPanelSummary>
+					<ExpansionPanelDetails>
+						<div className={classes.contentContainer}>
+							<Tooltip title="Copy Code">
+								<IconButton onClick={this.copyCode} className={classes.copyButton}>
+									<CopyIcon />
+								</IconButton>
+							</Tooltip>
+							<SyntaxHighlighter
+								language="javascript"
+								style={docco}
+								className={classes.code}
+								showLineNumbers
+							>
+								{this.viewContent}
+							</SyntaxHighlighter>
+						</div>
+					</ExpansionPanelDetails>
+				</ExpansionPanel>
+			</div>
+		)
+	}
 }
 
 ComponentCodePanel.propTypes = {

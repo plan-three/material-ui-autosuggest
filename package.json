@@ -5,7 +5,7 @@
 	"main": "dist/index.js",
 	"scripts": {
 		"build": "webpack",
-		"build:example": "webpack --config webpack-dev-server.config.js",
+		"build:example": "NODE_ENV=production webpack --config webpack-dev-server.config.js",
 		"build:docs": "node scripts/docs.js",
 		"build:all": "npm run build && npm run build:example && npm run build:docs",
 		"dev": "webpack-dev-server --config webpack-dev-server.config.js",
@@ -28,6 +28,7 @@
 	"devDependencies": {
 		"babel-eslint": "^8.2.1",
 		"babel-jest": "^22.2.2",
+		"copy-to-clipboard": "^3.0.8",
 		"enzyme": "^3.3.0",
 		"enzyme-adapter-react-16": "^1.1.1",
 		"eslint": "^4.17.0",

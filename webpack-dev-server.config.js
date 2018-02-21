@@ -2,6 +2,25 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
+const env = process.env.NODE_ENV
+
+let plugins = [
+	new HtmlWebpackPlugin({
+		title: 'Material-UI Autosuggest Example',
+		template: path.join(__dirname, 'example', 'index.html')
+	})
+]
+
+if (env === 'production') {
+	plugins = [
+		...plugins,
+		new webpack.DefinePlugin({
+			'process.env.NODE_ENV': JSON.stringify(env)
+		}),
+		new webpack.optimize.UglifyJsPlugin()
+	]
+}
+
 module.exports = {
 	entry: {
 		example: path.join(__dirname, 'example', 'index.js')
@@ -32,20 +51,12 @@ module.exports = {
 	resolve: {
 		extensions: ['.json', '.js', '.jsx', '.css']
 	},
-	plugins: [
-		new HtmlWebpackPlugin({
-			title: 'Material-UI Autosuggest Example',
-			template: path.join(__dirname, 'example', 'index.html')
-		}),
-		new webpack.DefinePlugin({
-			'process.env.NODE_ENV': JSON.stringify('production')
-		}),
-		new webpack.optimize.UglifyJsPlugin()
-	],
+	plugins: plugins,
 	devtool: 'source-map',
 	devServer: {
 		contentBase: path.join(__dirname, 'docs'),
 		compress: true,
-		port: 9000
+		port: 9000,
+		host: '0.0.0.0'
 	}
 }
