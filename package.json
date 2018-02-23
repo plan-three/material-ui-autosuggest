@@ -1,6 +1,6 @@
 {
 	"name": "material-ui-autosuggest",
-	"version": "0.0.2",
+	"version": "1.0.0-beta-1",
 	"description": "A fuzzy search autosuggest component for Material-UI",
 	"main": "dist/index.js",
 	"scripts": {
