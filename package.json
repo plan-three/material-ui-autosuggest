@@ -1,11 +1,11 @@
 {
   "name": "material-ui-autosuggest",
-  "version": "1.0.0-beta-1",
+  "version": "1.0.0-beta-2",
   "description": "A fuzzy search autosuggest component for Material-UI",
   "main": "dist/index.js",
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/plan-three/material-ui-autosuggest.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/plan-three/material-ui-autosuggest.git"
   },
   "scripts": {
     "build": "webpack",
