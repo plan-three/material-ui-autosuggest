@@ -3,10 +3,13 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import {
 	AppBar as MuiAppBar,
+	IconButton,
 	Toolbar,
+	Tooltip,
 	Typography
 } from 'material-ui'
 import AppMenu from './app-menu'
+import Github from './github'
 
 const styles = {
 	root: {
@@ -25,6 +28,16 @@ const AppBar = ({ title, classes, panels, togglePanelEnabled }) => {
 					<Typography variant="title" color="inherit" className={classes.flex}>
 						{ title }
 					</Typography>
+					<Tooltip id="appbar-github" title="GitHub repo" enterDelay={300}>
+						<IconButton
+							component="a"
+							color="inherit"
+							href="https://github.com/plan-three/material-ui-autosuggest"
+							aria-labelledby="appbar-github"
+						>
+							<Github />
+						</IconButton>
+					</Tooltip>
 					<AppMenu panels={panels} togglePanelEnabled={togglePanelEnabled} />
 				</Toolbar>
 			</MuiAppBar>
