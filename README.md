@@ -1,6 +1,6 @@
 # Material-UI Autosuggest
 
-A fussy-search autosuggest component for [Material-UI](https://material-ui-next.com).
+A fuzzy-search autosuggest component for [Material-UI](https://material-ui-next.com).
 
 ### Installing
 `$ npm install --save material-ui-autosuggest@latest`
