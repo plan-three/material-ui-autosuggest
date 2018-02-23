@@ -1,74 +1,78 @@
 {
-	"name": "material-ui-autosuggest",
-	"version": "0.0.2",
-	"description": "A fuzzy search autosuggest component for Material-UI",
-	"main": "dist/index.js",
-	"scripts": {
-		"build": "webpack",
-		"build:example": "NODE_ENV=production webpack --config webpack-dev-server.config.js",
-		"build:docs": "node scripts/docs.js",
-		"build:all": "npm run build && npm run build:example && npm run build:docs",
-		"dev": "webpack-dev-server --config webpack-dev-server.config.js",
-		"test": "jest",
-		"lint": "eslint .",
-		"lint:fix": "eslint . --fix",
-		"precommit": "lint-staged && npm run test",
-		"docgen": "node scripts/docs.js",
-		"postinstall": "npm run build"
-	},
-	"keywords": [
-		"Material-UI",
-		"Fuzzy search",
-		"Autosuggest",
-		"React",
-		"Material design"
-	],
-	"author": "Taylor Growden <taylor.growden@gmail.com>",
-	"license": "MIT",
-	"devDependencies": {
-		"babel-eslint": "^8.2.1",
-		"babel-jest": "^22.2.2",
-		"copy-to-clipboard": "^3.0.8",
-		"enzyme": "^3.3.0",
-		"enzyme-adapter-react-16": "^1.1.1",
-		"eslint": "^4.17.0",
-		"eslint-plugin-jest": "^21.12.1",
-		"eslint-plugin-react": "^7.6.1",
-		"html-webpack-plugin": "^2.30.1",
-		"husky": "^0.14.3",
-		"jest": "^22.2.2",
-		"lint-staged": "^6.1.0",
-		"material-ui-icons": "^1.0.0-beta.17",
-		"moment-timezone": "^0.5.14",
-		"react-docgen": "^2.20.1",
-		"react-docgen-markdown-renderer": "^1.0.1",
-		"react-syntax-highlighter": "^7.0.0",
-		"webpack-dev-server": "^2.11.1"
-	},
-	"dependencies": {
-		"babel-core": "^6.26.0",
-		"babel-loader": "^7.1.2",
-		"babel-plugin-transform-object-rest-spread": "^6.26.0",
-		"babel-preset-env": "^1.6.1",
-		"babel-preset-es2015": "^6.24.1",
-		"babel-preset-react": "^6.24.1",
-		"fuse.js": "^3.2.0",
-		"material-ui": "^1.0.0-beta.33",
-		"prop-types": "^15.6.0",
-		"react": "^16.2.0",
-		"react-autosuggest": "^9.3.3",
-		"react-dom": "^16.2.0",
-		"webpack": "^3.11.0"
-	},
-	"lint-staged": {
-		"*.js": [
-			"eslint"
-		]
-	},
-	"jest": {
-		"setupTestFrameworkScriptFile": "<rootDir>test-setup.js",
-		"transform": {
-			"^.+\\.js$": "babel-jest"
-		}
-	}
+  "name": "material-ui-autosuggest",
+  "version": "1.0.0-beta-1",
+  "description": "A fuzzy search autosuggest component for Material-UI",
+  "main": "dist/index.js",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/plan-three/material-ui-autosuggest.git"
+  },
+  "scripts": {
+    "build": "webpack",
+    "build:example": "NODE_ENV=production webpack --config webpack-dev-server.config.js",
+    "build:docs": "node scripts/docs.js",
+    "build:all": "npm run build && npm run build:example && npm run build:docs",
+    "dev": "webpack-dev-server --config webpack-dev-server.config.js",
+    "test": "jest",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "precommit": "lint-staged && npm run test",
+    "docgen": "node scripts/docs.js",
+    "postinstall": "npm run build"
+  },
+  "keywords": [
+    "Material-UI",
+    "Fuzzy search",
+    "Autosuggest",
+    "React",
+    "Material design"
+  ],
+  "author": "Taylor Growden <taylor.growden@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-eslint": "^8.2.1",
+    "babel-jest": "^22.2.2",
+    "copy-to-clipboard": "^3.0.8",
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^4.17.0",
+    "eslint-plugin-jest": "^21.12.1",
+    "eslint-plugin-react": "^7.6.1",
+    "html-webpack-plugin": "^2.30.1",
+    "husky": "^0.14.3",
+    "jest": "^22.2.2",
+    "lint-staged": "^6.1.0",
+    "material-ui-icons": "^1.0.0-beta.17",
+    "moment-timezone": "^0.5.14",
+    "react-docgen": "^2.20.1",
+    "react-docgen-markdown-renderer": "^1.0.1",
+    "react-syntax-highlighter": "^7.0.0",
+    "webpack-dev-server": "^2.11.1"
+  },
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "fuse.js": "^3.2.0",
+    "material-ui": "^1.0.0-beta.33",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-autosuggest": "^9.3.3",
+    "react-dom": "^16.2.0",
+    "webpack": "^3.11.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint"
+    ]
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "<rootDir>test-setup.js",
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    }
+  }
 }
