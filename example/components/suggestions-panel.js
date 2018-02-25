@@ -8,7 +8,7 @@ import ExpansionPanel, {
 import { Typography } from 'material-ui'
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore'
 import SyntaxHighlighter from 'react-syntax-highlighter'
-import { docco } from 'react-syntax-highlighter/styles/hljs'
+import { hybrid, docco } from 'react-syntax-highlighter/styles/hljs'
 
 const styles = {
 	root: {
@@ -20,7 +20,7 @@ const styles = {
 	}
 }
 
-const SuggestionsPanel = ({ classes, suggestions }) => {
+const SuggestionsPanel = ({ classes, suggestions, themeType }) => {
 	const hasSuggestions = !!suggestions.length
 	const code = hasSuggestions ? JSON.stringify(suggestions, null, 2) : '[\n  // suggestions \n]'
 	return (
@@ -32,7 +32,7 @@ const SuggestionsPanel = ({ classes, suggestions }) => {
 				<ExpansionPanelDetails>
 					<SyntaxHighlighter
 						language={hasSuggestions ? 'json' : 'javascript'}
-						style={docco}
+						style={themeType === 'light' ? docco : hybrid}
 						className={classes.code}
 					>
 						{code}
