@@ -57,7 +57,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "fuse.js": "^3.2.0",
-    "material-ui": "^1.0.0-beta.33",
+    "material-ui": "^1.0.0-beta.34",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-autosuggest": "^9.3.3",
