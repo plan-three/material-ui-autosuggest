@@ -6,6 +6,7 @@ import { MuiThemeProvider, withStyles, createMuiTheme } from 'material-ui/styles
 import OptionsPanel from './components/options-panel'
 import SuggestionsPanel from './components/suggestions-panel'
 import ComponentCodePanel from './components/component-code-panel'
+import Reboot from 'material-ui/Reboot'
 
 const suggestions = moment.tz.names()
 	.map(tz => ({ label: tz }))
@@ -109,6 +110,7 @@ class App extends React.Component {
 		return (
 			<MuiThemeProvider theme={theme}>
 				<div id="main">
+					<Reboot />
 					<AppBar
 						title="Material-UI Autosuggest"
 						panels={panels}
