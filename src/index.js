@@ -248,9 +248,15 @@ Autosuggest.propTypes = {
 	/**
 	 * The number of suggestions to render
 	 */
-	suggestionLimit: PropTypes.number
+	suggestionLimit: PropTypes.number,
+	/**
+	 * The label for the rendered component
+	 */
+	label: PropTypes.string
 }
 
 export default withStyles(styles, { withTheme: true })(Autosuggest)
 
 exports.defaultProps = Autosuggest.defaultProps
+
+exports.propTypes = Autosuggest.propTypes

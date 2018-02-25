@@ -10,8 +10,9 @@ import CloseIcon from 'material-ui-icons/Close'
 import CopyIcon from 'material-ui-icons/ContentCopy'
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore'
 import SyntaxHighlighter from 'react-syntax-highlighter'
-import { docco } from 'react-syntax-highlighter/styles/hljs'
+import { docco, hybrid } from 'react-syntax-highlighter/styles/hljs'
 import copy from 'copy-to-clipboard'
+import { propTypes } from '../../src/index'
 
 const styles = theme => ({
 	root: {
@@ -35,32 +36,44 @@ const styles = theme => ({
 })
 
 function generateCodeContent(options) {
+	const optionKeys = Object.keys(options).filter(opt => (propTypes.hasOwnProperty(opt)))
 	return (
 	// eslint-disable-next-line
 `import React from 'react'
 import Autosuggest from 'material-ui-autosuggest'
 import PropTypes from 'prop-types'
 import moment from 'moment-timezone'
+import { withStyles } from 'material-ui/styles'
 
 const suggestions = moment.tz.names()
 	.map(tz => ({ label: tz }))
 
-const TimezoneAutosuggest = ({${Object.keys(options).map(option => `\n\t${option}, // ${typeof options[option] === 'string' ? `'${options[option].replace(/'/g, '\\\'')}'` : options[option]}`).join('')}
+const styles = {
+	tzAutosuggest: {
+		/* your styles */
+	}
+}
+
+const TimezoneAutosuggest = ({${optionKeys
+			.map(option => `\n\t${option}, // ${typeof options[option] === 'string' ? `'${options[option].replace(/'/g, '\\\'')}'` : options[option]}`)
+			.join('')}
+	classes, // classes generated from the \`withStyles\` HOC
 	...props // other props
 }) => (
-	<Autosuggest${Object.keys(options).map(option => {
+	<Autosuggest${optionKeys.map(option => {
 			return `\n\t\t${option}={${option}}`
 		}).join('')}
 		suggestions={suggestions}
 		searchKeys={['label']}
 		labelKey="label"
+		className={classes.tzAutosuggest}
 		{...props}
 	/>
 )
 
 TimezoneAutosuggest.propTypes = { /* your proptypes */ }
 
-export default TimezoneAutosuggest
+export default withStyles(styles)(TimezoneAutosuggest)
 
 `) // eslint-disable-line
 }
@@ -100,7 +113,7 @@ class ComponentCodePanel extends React.Component {
 	}
 
 	render() {
-		const { classes } = this.props
+		const { classes, themeType } = this.props
 
 		return (
 			<div className={classes.root}>
@@ -137,7 +150,7 @@ class ComponentCodePanel extends React.Component {
 							</Tooltip>
 							<SyntaxHighlighter
 								language="javascript"
-								style={docco}
+								style={themeType === 'light' ? docco : hybrid}
 								className={classes.code}
 								showLineNumbers
 							>

@@ -11,6 +11,7 @@ prop | type | default | required | description
 **highlight** | `Boolean` | `true` |  | Whether or not to highlight the search matches when rendering suggestions
 **inputLabelProps** | `Object` |  |  | Additional props for the inputLabel
 **inputProps** | `Object` |  |  | Addition inputProps for the input component
+**label** | `String` |  |  | The label for the rendered component
 **labelKey** | `String` | `'label'` |  | The key of the `suggestion` object to use a a label when rendering a suggestion
 **onBlur** | `Function` |  |  | The function to call when the input element blurs
 **onChange** | `Function` |  | ✔ | The function to call when the value is changed

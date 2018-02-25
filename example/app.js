@@ -2,10 +2,11 @@ import React from 'react'
 import moment from 'moment-timezone'
 import Autosuggest, { defaultProps } from '../src'
 import AppBar from './components/app-bar'
-import { withStyles } from 'material-ui/styles'
+import { MuiThemeProvider, withStyles, createMuiTheme } from 'material-ui/styles'
 import OptionsPanel from './components/options-panel'
 import SuggestionsPanel from './components/suggestions-panel'
 import ComponentCodePanel from './components/component-code-panel'
+import Reboot from 'material-ui/Reboot'
 
 const suggestions = moment.tz.names()
 	.map(tz => ({ label: tz }))
@@ -28,6 +29,7 @@ class App extends React.Component {
 		} = defaultProps
 
 		this.state = {
+			themeType: 'light',
 			suggestions: [],
 			value: '',
 			options: {
@@ -94,49 +96,61 @@ class App extends React.Component {
 		}
 	}
 
+	toggleDarkTheme() {
+		const themeType = this.state.themeType === 'light' ? 'dark' : 'light'
+		this.setState({ themeType })
+	}
+
 	render() {
 		const { classes } = this.props
-		const { options } = this.state
+		const { options, themeType } = this.state
 		const { panels } = options
+		const theme = createMuiTheme({ palette: { type: themeType } })
 
 		return (
-			<div>
-				<AppBar
-					title="Material-UI Autosuggest"
-					panels={panels}
-					togglePanelEnabled={this.togglePanelEnabled.bind(this)}
-				/>
-				<div className={classes.content}>
-					<Autosuggest
-						suggestions={suggestions}
-						searchKeys={['label']}
-						labelKey="label"
-						value={this.state.value}
-						onChange={this.handleChange}
-						label={options.label}
-						fullWidth={options.fullWidth}
-						helperText={options.helperText}
-						error={options.error}
-						highlight={options.highlight}
-						selectClosestMatch={options.selectClosestMatch}
-						suggestionLimit={options.suggestionLimit}
-						onSuggestionsChange={this.handleSuggestionsChange.bind(this)}
+			<MuiThemeProvider theme={theme}>
+				<div id="main">
+					<Reboot />
+					<AppBar
+						title="Material-UI Autosuggest"
+						panels={panels}
+						togglePanelEnabled={this.togglePanelEnabled.bind(this)}
+						toggleDarkTheme={this.toggleDarkTheme.bind(this)}
+						themeType={this.state.themeType}
 					/>
-					<OptionsPanel
-						options={options}
-						onOptionChange={this.handleOptionChange}
-						onOptionSwitchChange={this.handleOptionSwitchChange}
-					/>
-					{
-						this.state.options.panels.componentCode.enabled &&
-						<ComponentCodePanel options={this.state.options} />
-					}
-					{
-						this.state.options.panels.suggestions.enabled &&
-						<SuggestionsPanel suggestions={this.state.suggestions} />
-					}
+					<div className={classes.content}>
+						<Autosuggest
+							suggestions={suggestions}
+							searchKeys={['label']}
+							labelKey="label"
+							value={this.state.value}
+							onChange={this.handleChange}
+							label={options.label}
+							fullWidth={options.fullWidth}
+							helperText={options.helperText}
+							error={options.error}
+							highlight={options.highlight}
+							selectClosestMatch={options.selectClosestMatch}
+							suggestionLimit={options.suggestionLimit}
+							onSuggestionsChange={this.handleSuggestionsChange.bind(this)}
+						/>
+						<OptionsPanel
+							options={options}
+							onOptionChange={this.handleOptionChange}
+							onOptionSwitchChange={this.handleOptionSwitchChange}
+						/>
+						{
+							this.state.options.panels.componentCode.enabled &&
+							<ComponentCodePanel options={this.state.options} themeType={this.state.themeType} />
+						}
+						{
+							this.state.options.panels.suggestions.enabled &&
+							<SuggestionsPanel suggestions={this.state.suggestions} themeType={this.state.themeType} />
+						}
+						<style dangerouslySetInnerHTML={{ __html: `body { background-color: ${theme.palette.background.paper} }` }} />
+					</div>
 				</div>
-			</div>
+			</MuiThemeProvider>
 		)
 	}
 }

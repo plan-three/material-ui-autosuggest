@@ -10,6 +10,7 @@ import {
 } from 'material-ui'
 import AppMenu from './app-menu'
 import Github from './github'
+import Lightbulb from 'material-ui-icons/LightbulbOutline'
 
 const styles = {
 	root: {
@@ -20,7 +21,7 @@ const styles = {
 	}
 }
 
-const AppBar = ({ title, classes, panels, togglePanelEnabled }) => {
+const AppBar = ({ title, classes, panels, togglePanelEnabled, toggleDarkTheme, themeType }) => {
 	return (
 		<div className={classes.root}>
 			<MuiAppBar position="static">
@@ -36,6 +37,14 @@ const AppBar = ({ title, classes, panels, togglePanelEnabled }) => {
 							aria-labelledby="appbar-github"
 						>
 							<Github />
+						</IconButton>
+					</Tooltip>
+					<Tooltip title={`Use ${themeType === 'dark' ? 'Light' : 'Dark'} Theme`} enterDelay={300}>
+						<IconButton
+							onClick={toggleDarkTheme}
+							color="inherit"
+						>
+							<Lightbulb />
 						</IconButton>
 					</Tooltip>
 					<AppMenu panels={panels} togglePanelEnabled={togglePanelEnabled} />
