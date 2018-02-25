@@ -1,5 +1,5 @@
 {
-  "name": "material-ui-autosuggest",
+  "name": "@plan-three/material-ui-autosuggest",
   "version": "1.0.0-beta-5",
   "description": "A fuzzy search autosuggest component for Material-UI",
   "main": "dist/index.js",
