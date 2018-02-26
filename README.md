@@ -1,4 +1,5 @@
 [![npm package](https://img.shields.io/npm/v/@plan-three/material-ui-autosuggest.svg)](https://www.npmjs.org/package/@plan-three/material-ui-autosuggest)
+[![Build Status](https://travis-ci.org/plan-three/material-ui-autosuggest.svg?branch=master)](https://travis-ci.org/plan-three/material-ui-autosuggest)
 
 # Material-UI Autosuggest
 
