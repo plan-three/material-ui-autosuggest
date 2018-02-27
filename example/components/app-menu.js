@@ -40,7 +40,7 @@ class AppMenu extends React.Component {
 		const { panels, classes } = this.props
 
 		return (
-			<div>
+			<React.Fragment>
 				<IconButton
 					aria-label="More"
 					aria-haspopup="true"
@@ -76,7 +76,7 @@ class AppMenu extends React.Component {
 						</Paper>
 					</ClickAwayListener>
 				}
-			</div>
+			</React.Fragment>
 		)
 	}
 }

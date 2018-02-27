@@ -49,12 +49,12 @@ describe('Autosuggest', () => {
 	})
 
 	describe('handleBlur()', () => {
-		it('Should call `props.onBlur()`', () => {
+		it('Should call `props.onBlur()` with the current value', () => {
 			const onBlur = jest.fn()
 			const wrapper = mount(<Autosuggest {...requiredProps} onBlur={onBlur} />)
 			wrapper.find('Input').simulate('focus')
 			wrapper.find('Input').simulate('blur')
-			expect(onBlur).toHaveBeenCalled()
+			expect(onBlur).toHaveBeenCalledWith('')
 		})
 	})
 
