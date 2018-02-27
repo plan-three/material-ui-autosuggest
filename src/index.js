@@ -71,17 +71,17 @@ class Autosuggest extends React.Component {
 
 	handleBlur() {
 		const { labelKey } = this.props
+		let value = this.state.value
 		if (this.props.selectClosestMatch) {
-			let value =
-				this.state.suggestions[0] &&
-				this.state.suggestions[0].hasOwnProperty('item')
-					? this.state.suggestions[0].item[labelKey]
-					: ''
+			value = this.state.suggestions[0] &&
+				this.state.suggestions[0].hasOwnProperty('item') ?
+				this.state.suggestions[0].item[labelKey] :
+				value
 			this.setState({ value })
 			this.props.onChange(value)
 		}
 		if (typeof this.props.onBlur === 'function') {
-			this.props.onBlur()
+			this.props.onBlur(value)
 		}
 	}
 
