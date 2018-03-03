@@ -9,13 +9,14 @@ import Checkbox from 'material-ui/Checkbox'
 import { withStyles } from 'material-ui/styles'
 import ClickAwayListener from 'material-ui/utils/ClickAwayListener'
 
-const styles = {
+const styles = theme => ({
 	menu: {
 		position: 'absolute',
 		zIndex: 9,
-		right: 0
+		right: 0,
+		top: theme.spacing.unit * 2
 	}
-}
+})
 
 class AppMenu extends React.Component {
 	constructor(props) {

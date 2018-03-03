@@ -32,6 +32,7 @@ class App extends React.Component {
 			options: {
 				helperText: 'Enter your country (name or abbreviation)',
 				label: 'Country',
+				labelKey: 'label',
 				fullWidth,
 				error,
 				highlight,
