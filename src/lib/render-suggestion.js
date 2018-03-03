@@ -1,7 +1,7 @@
 import React from 'react'
 import { MenuItem } from 'material-ui/Menu'
 import Typography from 'material-ui/Typography'
-import isPartHighlighted from './is-part-highlighted'
+import HighlightedText from '../components/highlighted-text'
 
 export default function renderSuggestion(suggestion, { isHighlighted }) {
 	const { theme, highlight, labelKey } = this.props
@@ -21,27 +21,24 @@ export default function renderSuggestion(suggestion, { isHighlighted }) {
 					{
 						!highlight ?
 							(<Typography style={fullWidth}>{value}</Typography>) :
-							Array.from(value, (part, i) => {
-								if (part === ' ') {
-									return (<span key={String(i)} dangerouslySetInnerHTML={{__html: '&nbsp;'}} />)
-								}
-								const highlight = isPartHighlighted(i, match)
-								const fontWeight = highlight ? 500 : 300
-								return (
-									<span key={String(i)} style={{ fontWeight }}>
-										{part}
-									</span>
-								)
-							})
+							(<HighlightedText value={value} match={match} />)
 					}
 				</div>
 				{
 					secondaryKeys.length > 0 &&
-					secondaryKeys.map((keyName, key) => (
-						<div style={fullWidth} key={`${keyName}-${key}`}>
-							<Typography variant="caption">{item[keyName]}</Typography>
-						</div>
-					))
+					secondaryKeys.map((keyName, key) => {
+						const match = matches.find(i => (i.key === keyName))
+						const secondaryLabel = highlight && match ?
+							(
+								<Typography variant="caption"><HighlightedText value={item[keyName]} match={match} /></Typography>
+							) :
+							(
+								<Typography variant="caption">{item[keyName]}</Typography>
+							)
+						return (
+							<div style={fullWidth} key={`${keyName}-${key}`}>{secondaryLabel}</div>
+						)
+					})
 				}
 			</div>
 		</MenuItem>

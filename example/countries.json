@@ -250,6 +250,7 @@
   { "abbr": "AE", "label": "United Arab Emirates"},
   { "abbr": "GB", "label": "United Kingdom"},
   { "abbr": "US", "label": "United States"},
+  { "abbr": "USA", "label": "United States of America"},
   { "abbr": "ZZ", "label": "Unknown or Invalid Region"},
   { "abbr": "UY", "label": "Uruguay"},
   { "abbr": "UZ", "label": "Uzbekistan"},
