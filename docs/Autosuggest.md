@@ -12,6 +12,7 @@ prop | type | default | required | description
 **inputLabelProps** | `Object` |  |  | Additional props for the inputLabel
 **inputProps** | `Object` |  |  | Addition inputProps for the input component
 **label** | `String` |  |  | The label for the rendered component
+**labelKey** | `String` | `'label'` |  | 
 **onBlur** | `Function` |  |  | The function to call when the input element blurs
 **onChange** | `Function` |  | ✔ | The function to call when the value is changed
 **onSuggestionsChange** | `Function` |  |  | A function to call when suggestions are changed

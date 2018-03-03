@@ -61,35 +61,29 @@ class Autosuggest extends React.Component {
 	}
 
 	getSuggestions(value) {
-		const suggestions = this.fuzzySearcher
+		return this.fuzzySearcher
 			.search(value)
-		let res = []
-		suggestions.slice(0, this.suggestionLimit)
-			.forEach(suggestion => {
-				suggestion.matches.forEach(match => {
-					res.push({
-						item: suggestion.item,
-						match
-					})
-				})
-			})
-		return res.slice(0, this.suggestionLimit)
+			.slice(0, this.suggestionLimit)
 	}
 
 	getSuggestionValue(suggestion) {
-		return suggestion.item[suggestion.match.key]
+		return suggestion.item[this.props.labelKey]
 	}
 
 	handleBlur() {
+		const { labelKey } = this.props
 		let value = this.state.value
 		if (this.props.selectClosestMatch) {
 			const suggestion = this.state.suggestions[0]
-			value = suggestion &&
-				suggestion.hasOwnProperty('item') &&
-				suggestion.hasOwnProperty('match') &&
-				suggestion.item[suggestion.match.key] ?
-				suggestion.item[suggestion.match.key] :
-				value
+			if (suggestion) {
+				const match = suggestion.matches.find(item => (item.key === labelKey))
+				value = match &&
+					match.hasOwnProperty('value') &&
+					suggestion.hasOwnProperty('item') &&
+					suggestion.item.hasOwnProperty(labelKey) ?
+					match.value :
+					value
+			}
 			this.setState({ value })
 			this.props.onChange(value)
 		}
@@ -168,6 +162,7 @@ Autosuggest.defaultProps = {
 	suggestionLimit: 5,
 	error: false,
 	value: '',
+	labelKey: 'label',
 	fuzzySearchOpts: {
 		shouldSort: true,
 		includeMatches: true,
@@ -200,6 +195,7 @@ Autosuggest.propTypes = {
 	 * The array of suggestions
 	 */
 	suggestions: PropTypes.array.isRequired,
+	labelKey: PropTypes.string.isRequired,
 	classes: PropTypes.object.isRequired,
 	/**
 	 * The function to call when the value is changed
