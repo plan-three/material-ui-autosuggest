@@ -1,5 +1,5 @@
 import React from 'react'
-import { Paper } from 'material-ui'
+import Paper from 'material-ui/Paper'
 
 export default function renderSuggestionsContainer(options) {
 	const { theme, fullWidth } = this.props

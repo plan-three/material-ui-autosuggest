@@ -1,37 +1,29 @@
 /* eslint-env jest */
 import React from 'react'
 import { mount } from 'enzyme'
-import Autosuggest from './'
+import Autosuggest, { defaultProps } from './'
 
 const requiredProps = {
 	onChange: () => {},
-	suggestions: [],
-	searchKeys: []
+	suggestions: []
 }
 
 const testProps = {
 	suggestions: [
 		{
-			value: 'foo',
-			item: {
-				value: 'foo'
-			}
+			value: 'foo'
 		},
 		{
-			value: 'bar',
-			item: {
-				value: 'bar'
-			}
+			value: 'bar'
 		},
 		{
-			value: 'baz',
-			item: {
-				value: 'baz'
-			}
+			value: 'baz'
 		}
 	],
-	searchKeys: ['value'],
-	labelKey: 'value'
+	fuzzySearchOpts: {
+		...defaultProps.fuzzySearchOpts,
+		keys: [ 'value' ]
+	}
 }
 
 describe('Autosuggest', () => {
