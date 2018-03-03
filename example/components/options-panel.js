@@ -31,6 +31,15 @@ const OptionsPanel = ({
 		suggestionLimit
 	} = options
 
+	function onLimitChange(e) {
+		onOptionChange(
+			'suggestionLimit',
+			Object.assign({}, e, {
+				target: { value: parseInt(e.target.value) }
+			})
+		)
+	}
+
 	return (
 		<div className={classes.root}>
 			<ExpansionPanel defaultExpanded>
@@ -120,7 +129,7 @@ const OptionsPanel = ({
 								type="number"
 								fullWidth
 								label="Suggestion Limit"
-								onChange={onOptionChange.bind(null, 'suggestionLimit')}
+								onChange={onLimitChange}
 								helperText="The number of results to render"
 							/>
 						</Grid>

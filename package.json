@@ -18,7 +18,7 @@
     "lint:fix": "eslint . --fix",
     "precommit": "lint-staged && npm run test",
     "docgen": "node scripts/docs.js",
-    "postinstall": "npm run build"
+    "postinstall": "webpack -p --display none"
   },
   "keywords": [
     "Material-UI",
@@ -43,7 +43,6 @@
     "jest": "^22.2.2",
     "lint-staged": "^6.1.0",
     "material-ui-icons": "^1.0.0-beta.17",
-    "moment-timezone": "^0.5.14",
     "react-docgen": "^2.20.1",
     "react-docgen-markdown-renderer": "^1.0.1",
     "react-syntax-highlighter": "^7.0.0",
