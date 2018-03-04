@@ -40,21 +40,20 @@ function generateCodeContent(options) {
 	return (
 	// eslint-disable-next-line
 `import React from 'react'
-import Autosuggest from 'material-ui-autosuggest'
+import Autosuggest, { defaultProps } from 'material-ui-autosuggest'
 import PropTypes from 'prop-types'
-import moment from 'moment-timezone'
 import { withStyles } from 'material-ui/styles'
 
-const suggestions = moment.tz.names()
-	.map(tz => ({ label: tz }))
+// array of countries formatted like \`{"label": "United States", "abbr": "US"}\`
+import suggestions from './countries.json'
 
 const styles = {
-	tzAutosuggest: {
+	autosuggest: {
 		/* your styles */
 	}
 }
 
-const TimezoneAutosuggest = ({${optionKeys
+const CountryAutosuggest = ({${optionKeys
 			.map(option => `\n\t${option}, // ${typeof options[option] === 'string' ? `'${options[option].replace(/'/g, '\\\'')}'` : options[option]}`)
 			.join('')}
 	classes, // classes generated from the \`withStyles\` HOC
@@ -64,16 +63,18 @@ const TimezoneAutosuggest = ({${optionKeys
 			return `\n\t\t${option}={${option}}`
 		}).join('')}
 		suggestions={suggestions}
-		searchKeys={['label']}
-		labelKey="label"
-		className={classes.tzAutosuggest}
+		fuzzySearchOpts={{
+			...defaultProps.fuzzySearchOpts,
+			keys: ['label', 'abbr']
+		}}
+		className={classes.autosuggest}
 		{...props}
 	/>
 )
 
-TimezoneAutosuggest.propTypes = { /* your proptypes */ }
+CountryAutosuggest.propTypes = { /* your proptypes */ }
 
-export default withStyles(styles)(TimezoneAutosuggest)
+export default withStyles(styles)(CountryAutosuggest)
 
 `) // eslint-disable-line
 }

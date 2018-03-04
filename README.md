@@ -14,6 +14,10 @@ See the [example](https://plan-three.github.io/material-ui-autosuggest).
 ### Documentation
 Check out [Autosuggest.md](docs/Autosuggest.md).
 
+### Features
+* Fully customizable search: you can set up the fuzzy-search how you like. It uses [Fuse.js](http://fusejs.io/) under the hood and you can easily pass a config object.
+* Custom rendering: you can pass props for rendering of suggestions, or use the pre-configured components.
+
 ### Contributing
 See the [contributing guide](CONTRIBUTING.md)
 

@@ -1,5 +1,4 @@
 import React from 'react'
-import moment from 'moment-timezone'
 import Autosuggest, { defaultProps } from '../src'
 import AppBar from './components/app-bar'
 import { MuiThemeProvider, withStyles, createMuiTheme } from 'material-ui/styles'
@@ -7,9 +6,7 @@ import OptionsPanel from './components/options-panel'
 import SuggestionsPanel from './components/suggestions-panel'
 import ComponentCodePanel from './components/component-code-panel'
 import Reboot from 'material-ui/Reboot'
-
-const suggestions = moment.tz.names()
-	.map(tz => ({ label: tz }))
+import suggestions from './countries.json'
 
 const styles = {
 	content: {
@@ -33,8 +30,9 @@ class App extends React.Component {
 			suggestions: [],
 			value: '',
 			options: {
-				helperText: 'What\'s your timezone?',
-				label: 'Timezone',
+				helperText: 'Enter your country (name or abbreviation)',
+				label: 'Country',
+				labelKey: 'label',
 				fullWidth,
 				error,
 				highlight,
@@ -121,8 +119,10 @@ class App extends React.Component {
 					<div className={classes.content}>
 						<Autosuggest
 							suggestions={suggestions}
-							searchKeys={['label']}
-							labelKey="label"
+							fuzzySearchOpts={{
+								...defaultProps.fuzzySearchOpts,
+								keys: [ 'label', 'abbr' ]
+							}}
 							value={this.state.value}
 							onChange={this.handleChange}
 							label={options.label}

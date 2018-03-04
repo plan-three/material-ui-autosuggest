@@ -3,17 +3,18 @@ import PropTypes from 'prop-types'
 import ReactAutosuggest from 'react-autosuggest'
 import { withStyles } from 'material-ui/styles'
 import Fuse from 'fuse.js'
-import {
-	renderInput,
-	renderSuggestion,
-	renderSuggestionsContainer
-} from './lib'
+import renderInput from './lib/render-input'
+import renderSuggestion from './lib/render-suggestion'
+import renderSuggestionsContainer from './lib/render-suggestions-container'
 
 const styles = theme => ({
 	container: {
 		flexGrow: 1,
 		position: 'relative',
 		height: 200
+	},
+	containerFitContent: {
+		width: 'fit-content'
 	},
 	suggestionsContainerOpen: {
 		position: 'absolute',
@@ -57,26 +58,35 @@ class Autosuggest extends React.Component {
 		this.handleSuggestionsChange = this.handleSuggestionsChange.bind(this)
 	}
 
+	get suggestionLimit() {
+		const { suggestionLimit, suggestions } = this.props
+		return suggestionLimit < suggestions.length ? suggestionLimit : suggestions.length
+	}
+
 	getSuggestions(value) {
-		const { suggestionLimit } = this.props
 		return this.fuzzySearcher
 			.search(value)
-			.slice(0, suggestionLimit)
+			.slice(0, this.suggestionLimit)
 	}
 
 	getSuggestionValue(suggestion) {
-		const { labelKey } = this.props
-		return suggestion.item[labelKey]
+		return suggestion.item[this.props.labelKey]
 	}
 
 	handleBlur() {
 		const { labelKey } = this.props
 		let value = this.state.value
 		if (this.props.selectClosestMatch) {
-			value = this.state.suggestions[0] &&
-				this.state.suggestions[0].hasOwnProperty('item') ?
-				this.state.suggestions[0].item[labelKey] :
-				value
+			const suggestion = this.state.suggestions[0]
+			if (suggestion) {
+				const match = suggestion.matches.find(item => (item.key === labelKey))
+				value = match &&
+					match.hasOwnProperty('value') &&
+					suggestion.hasOwnProperty('item') &&
+					suggestion.item.hasOwnProperty(labelKey) ?
+					match.value :
+					value
+			}
 			this.setState({ value })
 			this.props.onChange(value)
 		}
@@ -86,9 +96,9 @@ class Autosuggest extends React.Component {
 	}
 
 	handleSuggestionsChange() {
-		const { onSuggestionsChange, suggestionLimit } = this.props
+		const { onSuggestionsChange } = this.props
 		if (typeof onSuggestionsChange === 'function') {
-			onSuggestionsChange(this.state.suggestions.slice(0, suggestionLimit))
+			onSuggestionsChange(this.state.suggestions.slice(0, this.suggestionLimit))
 		}
 	}
 
@@ -112,7 +122,10 @@ class Autosuggest extends React.Component {
 	}
 
 	render() {
-		const { classes } = this.props
+		const { classes, fullWidth } = this.props
+		if (!fullWidth) {
+			classes.container += ` ${classes.containerFitContent}`
+		}
 
 		return (
 			<ReactAutosuggest
@@ -133,6 +146,7 @@ class Autosuggest extends React.Component {
 				renderSuggestionsContainer={this.renderSuggestionsContainer}
 				getSuggestionValue={this.getSuggestionValue}
 				renderSuggestion={this.renderSuggestion}
+				ref='foo'
 				inputProps={{
 					classes,
 					value: this.state.value,
@@ -152,10 +166,10 @@ class Autosuggest extends React.Component {
 
 Autosuggest.defaultProps = {
 	selectClosestMatch: false,
-	labelKey: 'label',
 	suggestionLimit: 5,
 	error: false,
 	value: '',
+	labelKey: 'label',
 	fuzzySearchOpts: {
 		shouldSort: true,
 		includeMatches: true,
@@ -188,13 +202,6 @@ Autosuggest.propTypes = {
 	 * The array of suggestions
 	 */
 	suggestions: PropTypes.array.isRequired,
-	/**
-	 * The object keys to search in the suggestions array
-	 */
-	searchKeys: PropTypes.array.isRequired,
-	/**
-	 * The key of the `suggestion` object to use a a label when rendering a suggestion
-	 */
 	labelKey: PropTypes.string.isRequired,
 	classes: PropTypes.object.isRequired,
 	/**

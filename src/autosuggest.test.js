@@ -1,36 +1,29 @@
 /* eslint-env jest */
 import React from 'react'
 import { mount } from 'enzyme'
-import Autosuggest from './'
+import Autosuggest, { defaultProps } from './'
 
 const requiredProps = {
 	onChange: () => {},
-	suggestions: [],
-	searchKeys: []
+	suggestions: []
 }
 
 const testProps = {
 	suggestions: [
 		{
-			value: 'foo',
-			item: {
-				value: 'foo'
-			}
+			value: 'foo'
 		},
 		{
-			value: 'bar',
-			item: {
-				value: 'bar'
-			}
+			value: 'bar'
 		},
 		{
-			value: 'baz',
-			item: {
-				value: 'baz'
-			}
+			value: 'baz'
 		}
 	],
-	searchKeys: ['value'],
+	fuzzySearchOpts: {
+		...defaultProps.fuzzySearchOpts,
+		keys: [ 'value' ]
+	},
 	labelKey: 'value'
 }
 
@@ -69,6 +62,16 @@ describe('Autosuggest', () => {
 			expect(wrapper.find('Autosuggest').at(0).instance().renderInput).toEqual(props.renderInput)
 			expect(props.renderInput).toHaveBeenCalled()
 		})
+		it('Should use the provided renderInput function by default', () => {
+			const props = {
+				...testProps,
+				onChange: jest.fn()
+			}
+			const wrapper = mount(<Autosuggest {...props} />)
+			const renderSpy = jest.spyOn(wrapper.find('Autosuggest').at(0).instance(), 'renderInput')
+			wrapper.find('input').simulate('change', { target: { value: 'f' } })
+			expect(renderSpy).toHaveBeenCalled()
+		})
 	})
 
 	describe('renderSuggestion()', () => {
@@ -81,6 +84,17 @@ describe('Autosuggest', () => {
 			const wrapper = mount(<Autosuggest {...props} />)
 			expect(wrapper.find('Autosuggest').at(0).instance().renderSuggestion).toEqual(props.renderSuggestion)
 		})
+		it('Should use the provided renderSuggestion function by default', () => {
+			const props = {
+				...testProps,
+				onChange: jest.fn()
+			}
+			const wrapper = mount(<Autosuggest {...props} />)
+			const renderSpy = jest.spyOn(wrapper.find('Autosuggest').at(0).instance(), 'renderSuggestion')
+			wrapper.find('input').simulate('focus')
+			wrapper.find('input').simulate('change', { target: { value: 'f' } })
+			expect(renderSpy).toHaveBeenCalled()
+		})
 	})
 
 	describe('renderSuggestionsContainer()', () => {
@@ -92,6 +106,17 @@ describe('Autosuggest', () => {
 			}
 			const wrapper = mount(<Autosuggest {...props} />)
 			expect(wrapper.find('Autosuggest').at(0).instance().renderSuggestionsContainer).toEqual(props.renderSuggestionsContainer)
+		})
+		it('Should use the provided renderSuggestionsContainer function by default', () => {
+			const props = {
+				...testProps,
+				onChange: jest.fn()
+			}
+			const wrapper = mount(<Autosuggest {...props} />)
+			const renderSpy = jest.spyOn(wrapper.find('Autosuggest').at(0).instance(), 'renderSuggestionsContainer')
+			wrapper.find('input').simulate('focus')
+			wrapper.find('input').simulate('change', { target: { value: 'fo' } })
+			expect(renderSpy).toHaveBeenCalled()
 		})
 	})
 

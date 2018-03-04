@@ -12,14 +12,13 @@ prop | type | default | required | description
 **inputLabelProps** | `Object` |  |  | Additional props for the inputLabel
 **inputProps** | `Object` |  |  | Addition inputProps for the input component
 **label** | `String` |  |  | The label for the rendered component
-**labelKey** | `String` | `'label'` |  | The key of the `suggestion` object to use a a label when rendering a suggestion
+**labelKey** | `String` | `'label'` |  | 
 **onBlur** | `Function` |  |  | The function to call when the input element blurs
 **onChange** | `Function` |  | ✔ | The function to call when the value is changed
 **onSuggestionsChange** | `Function` |  |  | A function to call when suggestions are changed
 **renderInput** | `Function` |  |  | A custom function for rendering the input component
 **renderSuggestion** | `Function` |  |  | A custom function for rendering an individual suggestion element
 **renderSuggestionsContainer** | `Function` |  |  | A custom function for rendering the suggestion containing element
-**searchKeys** | `Array` |  | ✔ | The object keys to search in the suggestions array
 **selectClosestMatch** | `Boolean` | `false` |  | Select the closest match onBlur
 **suggestionLimit** | `Number` | `5` |  | The number of suggestions to render
 **suggestions** | `Array` |  | ✔ | The array of suggestions

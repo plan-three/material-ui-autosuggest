@@ -36,8 +36,10 @@ module.exports = {
 	resolve: {
 		extensions: ['.json', '.js', '.jsx', '.css']
 	},
-	devtool: 'source-map',
 	plugins: [
-		new webpack.optimize.UglifyJsPlugin()
+		new webpack.optimize.UglifyJsPlugin(),
+		new webpack.DefinePlugin({
+			'process.env.NODE_ENV': JSON.stringify('production')
+		})
 	]
 }
