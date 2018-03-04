@@ -13,6 +13,9 @@ const styles = theme => ({
 		position: 'relative',
 		height: 200
 	},
+	containerFitContent: {
+		width: 'fit-content'
+	},
 	suggestionsContainerOpen: {
 		position: 'absolute',
 		marginTop: theme.spacing.unit,
@@ -119,7 +122,10 @@ class Autosuggest extends React.Component {
 	}
 
 	render() {
-		const { classes } = this.props
+		const { classes, fullWidth } = this.props
+		if (!fullWidth) {
+			classes.container += ` ${classes.containerFitContent}`
+		}
 
 		return (
 			<ReactAutosuggest
@@ -140,6 +146,7 @@ class Autosuggest extends React.Component {
 				renderSuggestionsContainer={this.renderSuggestionsContainer}
 				getSuggestionValue={this.getSuggestionValue}
 				renderSuggestion={this.renderSuggestion}
+				ref='foo'
 				inputProps={{
 					classes,
 					value: this.state.value,
