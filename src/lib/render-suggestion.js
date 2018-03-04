@@ -43,12 +43,13 @@ export default function renderSuggestion(suggestion, { isHighlighted }) {
 					secondaryKeys.length > 0 &&
 					secondaryKeys.map((keyName, key) => {
 						const match = matches.find(i => (i.key === keyName))
-						const secondaryLabel = highlight && match ?
+						if (!match) return null
+						const secondaryLabel = highlight ?
 							(
-								<Typography variant="caption"><HighlightedText value={item[keyName]} match={match} /></Typography>
+								<Typography><HighlightedText value={item[keyName]} match={match} /></Typography>
 							) :
 							(
-								<Typography variant="caption">{item[keyName]}</Typography>
+								<Typography>{item[keyName]}</Typography>
 							)
 						return (
 							<Chip key={`${keyName}-${key}`} label={secondaryLabel} style={styles.chip} />
