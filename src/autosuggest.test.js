@@ -27,6 +27,30 @@ const testProps = {
 	labelKey: 'value'
 }
 
+const nestedSuggestions = [
+	{
+		value: 'foo',
+		name: {
+			first: 'foo',
+			last: 'qux'
+		}
+	},
+	{
+		value: 'bar',
+		name: {
+			first: 'bar',
+			last: 'qux'
+		}
+	},
+	{
+		value: 'baz',
+		name: {
+			first: 'baz',
+			last: 'qux'
+		}
+	}
+]
+
 describe('Autosuggest', () => {
 	it('Should mount without failing', () => {
 		expect(() => {mount(<Autosuggest {...requiredProps} />)}).not.toThrow()
@@ -39,6 +63,22 @@ describe('Autosuggest', () => {
 		const wrapper = mount(<Autosuggest {...props} value="" selectClosestMatch />)
 		wrapper.find('input').simulate('change', {target: {value: 'bar'}})
 		expect(props.onChange).toHaveBeenCalledWith('bar')
+	})
+	it('Should handle nested key searching', () => {
+		const props = {
+			...testProps,
+			suggestions: nestedSuggestions,
+			fuzzySearchOpts: {
+				...defaultProps.fuzzySearchOpts,
+				keys: [ 'name.first' ]
+			},
+			onChange: jest.fn()
+		}
+		const wrapper = mount(<Autosuggest {...props} />)
+		wrapper.find('input').simulate('focus')
+		expect(() => {
+			wrapper.find('input').simulate('change', { target: { value: 'fo' } })
+		}).not.toThrow()
 	})
 
 	describe('handleBlur()', () => {
