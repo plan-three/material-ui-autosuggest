@@ -6,7 +6,7 @@ import flattenObject from '../lib/flatten-object'
 import Chip from 'material-ui/Chip'
 
 export default function renderSuggestion(suggestion, { isHighlighted }) {
-	const { theme, highlight, labelKey, fuzzySearchOpts } = this.props
+	const { theme, labelKey, fuzzySearchOpts } = this.props
 	const { matches } = suggestion
 	const item = flattenObject(suggestion.item)
 	const match = matches.find(item => (item.key === labelKey))
@@ -14,6 +14,8 @@ export default function renderSuggestion(suggestion, { isHighlighted }) {
 	const value = match && match.value ? match.value : item[labelKey]
 	const secondaryKeys = Object.keys(item)
 		.filter(i => (i !== labelKey && ~fuzzySearchOpts.keys.indexOf(i)))
+
+	const { highlight, renderSecondaryMatches, ...renderProps } = this.props.renderSuggestionProps
 
 	const styles = {
 		fullWidth: {
@@ -25,12 +27,13 @@ export default function renderSuggestion(suggestion, { isHighlighted }) {
 		},
 		chip: {
 			marginRight: theme.spacing.unit,
-			marginTop: theme.spacing.unit
+			marginTop: theme.spacing.unit,
+			marginLeft: theme.spacing.unit
 		}
 	}
 
 	return (
-		<MenuItem component="div" style={styles.menuItem}>
+		<MenuItem component="div" style={styles.menuItem} {...renderProps}>
 			<div>
 				<div style={styles.fullWidth}>
 					{
@@ -40,6 +43,7 @@ export default function renderSuggestion(suggestion, { isHighlighted }) {
 					}
 				</div>
 				{
+					renderSecondaryMatches &&
 					secondaryKeys.length > 0 &&
 					secondaryKeys.map((keyName, key) => {
 						const match = matches.find(i => (i.key === keyName))

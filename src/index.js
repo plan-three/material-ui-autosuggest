@@ -170,6 +170,10 @@ Autosuggest.defaultProps = {
 	error: false,
 	value: '',
 	labelKey: 'label',
+	renderSuggestionProps: {
+		highlight: true,
+		renderSecondaryMatches: true
+	},
 	fuzzySearchOpts: {
 		shouldSort: true,
 		includeMatches: true,
@@ -181,8 +185,7 @@ Autosuggest.defaultProps = {
 		minMatchCharLength: 1,
 		keys: [ 'label' ]
 	},
-	fullWidth: true,
-	highlight: true
+	fullWidth: true
 }
 
 Autosuggest.propTypes = {
@@ -241,10 +244,6 @@ Autosuggest.propTypes = {
 	 */
 	selectClosestMatch: PropTypes.bool,
 	/**
-	 * Whether or not to highlight the search matches when rendering suggestions
-	 */
-	highlight: PropTypes.bool,
-	/**
 	 * A function to call when suggestions are changed
 	 */
 	onSuggestionsChange: PropTypes.func,
@@ -259,7 +258,11 @@ Autosuggest.propTypes = {
 	/**
 	 * The label for the rendered component
 	 */
-	label: PropTypes.string
+	label: PropTypes.string,
+	/**
+	 * Props used by the `renderSuggestion` function
+	 */
+	renderSuggestionProps: PropTypes.object
 }
 
 export default withStyles(styles, { withTheme: true })(Autosuggest)

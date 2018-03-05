@@ -64,6 +64,49 @@ describe('Autosuggest', () => {
 		wrapper.find('input').simulate('change', {target: {value: 'bar'}})
 		expect(props.onChange).toHaveBeenCalledWith('bar')
 	})
+	it('Should accept a variety of suggestion object shapes, searching without throwing an error', () => {
+		const props = {
+			suggestions: [
+				{
+					label: 'foo',
+					name: {
+						first: 'foo'
+					}
+				},
+				{},
+				{
+					label: undefined
+				},
+				{
+					label: 'bar',
+					birthYear: '1990',
+					title: 'bar'
+				},
+				{
+					label: 'baz',
+					name: 'baz'
+				},
+				{
+					role: 'qux'
+				}
+			],
+			value: '',
+			labelKey: 'label',
+			onChange: jest.fn(),
+			fuzzySearchOpts: {
+				...defaultProps.fuzzySearchOpts,
+				keys: [ 'name.first', 'label' ]
+			},
+			selectClosestMatch: true,
+			onSuggestionsChange: jest.fn()
+		}
+		const wrapper = mount(<Autosuggest {...props} />)
+		expect(() => {
+			wrapper.find('input').simulate('change', { target: { value: 'fo' } })
+		}).not.toThrow()
+		wrapper.find('input').simulate('blur')
+		expect(props.onChange).toHaveBeenCalledWith('foo')
+	})
 	it('Should handle nested key searching', () => {
 		const props = {
 			...testProps,
