@@ -8,7 +8,6 @@ prop | type | default | required | description
 **fullWidth** | `Boolean` | `true` |  | Whether or not the input should be rendered at full width
 **fuzzySearchOpts** | `Object` | `{     shouldSort: true,     includeMatches: true,     findAllMatches: false,     threshold: 0.6,     location: 0,     distance: 100,     maxPatternLength: 32,     minMatchCharLength: 1,     keys: [ 'label' ] }` |  | @see http://fusejs.io/#live-demo
 **helperText** | `String` |  |  | The helper text of the input element
-**highlight** | `Boolean` | `true` |  | Whether or not to highlight the search matches when rendering suggestions
 **inputLabelProps** | `Object` |  |  | Additional props for the inputLabel
 **inputProps** | `Object` |  |  | Addition inputProps for the input component
 **label** | `String` |  |  | The label for the rendered component
@@ -18,6 +17,7 @@ prop | type | default | required | description
 **onSuggestionsChange** | `Function` |  |  | A function to call when suggestions are changed
 **renderInput** | `Function` |  |  | A custom function for rendering the input component
 **renderSuggestion** | `Function` |  |  | A custom function for rendering an individual suggestion element
+**renderSuggestionProps** | `Object` | `{     highlight: true,     renderSecondaryMatches: true }` |  | Props used by the `renderSuggestion` function
 **renderSuggestionsContainer** | `Function` |  |  | A custom function for rendering the suggestion containing element
 **selectClosestMatch** | `Boolean` | `false` |  | Select the closest match onBlur
 **suggestionLimit** | `Number` | `5` |  | The number of suggestions to render

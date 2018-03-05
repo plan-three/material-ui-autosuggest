@@ -19,17 +19,20 @@ const OptionsPanel = ({
 	classes,
 	options,
 	onOptionChange,
-	onOptionSwitchChange
+	onOptionSwitchChange,
+	onRenderSuggestionPropsChange
 }) => {
 	const {
 		error,
 		fullWidth,
 		label,
 		helperText,
-		highlight,
 		selectClosestMatch,
-		suggestionLimit
+		suggestionLimit,
+		renderSuggestionProps
 	} = options
+
+	const { highlight, renderSecondaryMatches } = renderSuggestionProps
 
 	function onLimitChange(e) {
 		onOptionChange(
@@ -79,8 +82,21 @@ const OptionsPanel = ({
 								<FormControlLabel
 									control={
 										<Switch
+											checked={selectClosestMatch}
+											onChange={onOptionSwitchChange.bind(null, 'selectClosestMatch')}
+										/>
+									}
+									label="Select Closest Match"
+								/>
+							</FormGroup>
+						</Grid>
+						<Grid item xs={12}>
+							<FormGroup row>
+								<FormControlLabel
+									control={
+										<Switch
 											checked={highlight}
-											onChange={onOptionSwitchChange.bind(null, 'highlight')}
+											onChange={onRenderSuggestionPropsChange.bind(null, 'highlight')}
 										/>
 									}
 									label="Highlight results"
@@ -92,11 +108,11 @@ const OptionsPanel = ({
 								<FormControlLabel
 									control={
 										<Switch
-											checked={selectClosestMatch}
-											onChange={onOptionSwitchChange.bind(null, 'selectClosestMatch')}
+											checked={renderSecondaryMatches}
+											onChange={onRenderSuggestionPropsChange.bind(null, 'renderSecondaryMatches')}
 										/>
 									}
-									label="Select Closest Match"
+									label="Render secondary match labels"
 								/>
 							</FormGroup>
 						</Grid>

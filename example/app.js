@@ -20,7 +20,7 @@ class App extends React.Component {
 		const {
 			error,
 			fullWidth,
-			highlight,
+			renderSuggestionProps,
 			selectClosestMatch,
 			suggestionLimit
 		} = defaultProps
@@ -35,7 +35,7 @@ class App extends React.Component {
 				labelKey: 'label',
 				fullWidth,
 				error,
-				highlight,
+				renderSuggestionProps,
 				selectClosestMatch,
 				suggestionLimit,
 				panels: {
@@ -68,6 +68,12 @@ class App extends React.Component {
 
 	handleChange(value) {
 		this.setState({ value })
+	}
+
+	handleRenderSuggestionPropsChange(key, e, checked) {
+		const { options } = this.state
+		options.renderSuggestionProps[key] = checked
+		this.setState({ options })
 	}
 
 	handleOptionChange(key, e) {
@@ -133,11 +139,13 @@ class App extends React.Component {
 							selectClosestMatch={options.selectClosestMatch}
 							suggestionLimit={options.suggestionLimit}
 							onSuggestionsChange={this.handleSuggestionsChange.bind(this)}
+							renderSuggestionProps={this.state.renderSuggestionProps}
 						/>
 						<OptionsPanel
 							options={options}
 							onOptionChange={this.handleOptionChange}
 							onOptionSwitchChange={this.handleOptionSwitchChange}
+							onRenderSuggestionPropsChange={this.handleRenderSuggestionPropsChange.bind(this)}
 						/>
 						{
 							this.state.options.panels.componentCode.enabled &&
