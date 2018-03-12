@@ -140,6 +140,7 @@ class App extends React.Component {
 							suggestionLimit={options.suggestionLimit}
 							onSuggestionsChange={this.handleSuggestionsChange.bind(this)}
 							renderSuggestionProps={this.state.renderSuggestionProps}
+							multiSelection
 						/>
 						<OptionsPanel
 							options={options}
