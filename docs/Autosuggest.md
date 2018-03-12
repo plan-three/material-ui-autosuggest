@@ -15,6 +15,7 @@ prop | type | default | required | description
 **onBlur** | `Function` |  |  | The function to call when the input element blurs
 **onChange** | `Function` |  | ✔ | The function to call when the value is changed
 **onSuggestionsChange** | `Function` |  |  | A function to call when suggestions are changed
+**productionPrefix** | `String` | `'mui-autosuggest'` |  | The prefix for generated JSS classNames
 **renderInput** | `Function` |  |  | A custom function for rendering the input component
 **renderSuggestion** | `Function` |  |  | A custom function for rendering an individual suggestion element
 **renderSuggestionProps** | `Object` | `{     highlight: true,     renderSecondaryMatches: true }` |  | Props used by the `renderSuggestion` function

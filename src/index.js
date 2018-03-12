@@ -6,6 +6,9 @@ import Fuse from 'fuse.js'
 import renderInput from './lib/render-input'
 import renderSuggestion from './lib/render-suggestion'
 import renderSuggestionsContainer from './lib/render-suggestions-container'
+import JssProvider from 'react-jss/lib/JssProvider'
+import { create } from 'jss'
+import { createGenerateClassName, jssPreset } from 'material-ui/styles'
 
 const styles = theme => ({
 	container: {
@@ -122,44 +125,51 @@ class Autosuggest extends React.Component {
 	}
 
 	render() {
-		const { classes, fullWidth } = this.props
+		const { classes, fullWidth, productionPrefix } = this.props
 		if (!fullWidth) {
 			classes.container += ` ${classes.containerFitContent}`
 		}
 
+		const generateClassName = createGenerateClassName({
+			productionPrefix: productionPrefix
+		})
+		const jss = create(jssPreset())
+
 		return (
-			<ReactAutosuggest
-				theme={{
-					container: classes.container,
-					suggestionsContainerOpen: classes.suggestionsContainerOpen,
-					suggestionsList: classes.suggestionsList,
-					suggestion: classes.suggestion
-				}}
-				renderInputComponent={this.renderInput}
-				suggestions={this.state.suggestions}
-				onSuggestionsFetchRequested={
-					this.handleSuggestionsFetchRequested
-				}
-				onSuggestionsClearRequested={
-					this.handleSuggestionsClearRequested
-				}
-				renderSuggestionsContainer={this.renderSuggestionsContainer}
-				getSuggestionValue={this.getSuggestionValue}
-				renderSuggestion={this.renderSuggestion}
-				ref='foo'
-				inputProps={{
-					classes,
-					value: this.state.value,
-					onChange: this.handleChange,
-					onBlur: this.handleBlur,
-					label: this.props.label,
-					inputLabelProps: this.props.inputLabelProps,
-					fullWidth: this.props.fullWidth,
-					error: this.props.error,
-					helperText: this.props.helperText,
-					...this.props.inputProps
-				}}
-			/>
+			<JssProvider jss={jss} generateClassName={generateClassName}>
+				<ReactAutosuggest
+					theme={{
+						container: classes.container,
+						suggestionsContainerOpen: classes.suggestionsContainerOpen,
+						suggestionsList: classes.suggestionsList,
+						suggestion: classes.suggestion
+					}}
+					renderInputComponent={this.renderInput}
+					suggestions={this.state.suggestions}
+					onSuggestionsFetchRequested={
+						this.handleSuggestionsFetchRequested
+					}
+					onSuggestionsClearRequested={
+						this.handleSuggestionsClearRequested
+					}
+					renderSuggestionsContainer={this.renderSuggestionsContainer}
+					getSuggestionValue={this.getSuggestionValue}
+					renderSuggestion={this.renderSuggestion}
+					ref='foo'
+					inputProps={{
+						classes,
+						value: this.state.value,
+						onChange: this.handleChange,
+						onBlur: this.handleBlur,
+						label: this.props.label,
+						inputLabelProps: this.props.inputLabelProps,
+						fullWidth: this.props.fullWidth,
+						error: this.props.error,
+						helperText: this.props.helperText,
+						...this.props.inputProps
+					}}
+				/>
+			</JssProvider>
 		)
 	}
 }
@@ -185,7 +195,8 @@ Autosuggest.defaultProps = {
 		minMatchCharLength: 1,
 		keys: [ 'label' ]
 	},
-	fullWidth: true
+	fullWidth: true,
+	productionPrefix: 'mui-autosuggest'
 }
 
 Autosuggest.propTypes = {
@@ -262,7 +273,11 @@ Autosuggest.propTypes = {
 	/**
 	 * Props used by the `renderSuggestion` function
 	 */
-	renderSuggestionProps: PropTypes.object
+	renderSuggestionProps: PropTypes.object,
+	/**
+	 * The prefix for generated JSS classNames
+	 */
+	productionPrefix: PropTypes.string.isRequired
 }
 
 export default withStyles(styles, { withTheme: true })(Autosuggest)
