@@ -21,7 +21,7 @@
     "postinstall": "webpack -p --display none"
   },
   "keywords": [
-    "Material-UI",
+    "material-ui",
     "Fuzzy search",
     "Autosuggest",
     "React",
